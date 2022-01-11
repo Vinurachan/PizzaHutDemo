@@ -4,19 +4,50 @@ import {Component} from 'react';
 import {
   Button,
   Image,
+  PermissionsAndroid,
   SafeAreaView,
   StatusBar,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {styles} from '../styles/Login.js';
+import InputField from '../components/InputField';
+
+const callPhoneCheck = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CALL_PHONE,
+      {
+        title: 'PizzaHutDemo App Call Phone Permission',
+        message: 'PizzaHutDemo App needs access to call your phone ',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can call this phone');
+    } else {
+      console.log('Call Phone permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 export default class Login extends Component {
   state = {
     email: '',
     userPassword: '',
   };
+
+  componentDidMount() {
+    wait(2000).then(callPhoneCheck);
+  }
 
   render() {
     return (
@@ -40,33 +71,26 @@ export default class Login extends Component {
               }}>
               Sign In
             </Text>
-            <View style={styles.textInputCard}>
-              <Text style={styles.textInputCardLeft}>Username</Text>
-              <TextInput
-                style={styles.textInputCardRight}
-                placeholder="Enter Username"
-                textAlign="center"
-                value={this.state.email}></TextInput>
-            </View>
-            <View style={styles.textInputCard}>
-              <Text style={styles.textInputCardLeft}>Password</Text>
-              <TextInput
-                style={styles.textInputCardRight}
-                secureTextEntry={true}
-                placeholder="Enter Password"
-                textAlign="center"
-                value={this.state.userPassword}></TextInput>
-            </View>
+            <InputField
+              name="Username"
+              placeholder="Enter Username"
+              value={this.state.email}
+            />
+            <InputField
+              name="Password"
+              placeholder="Enter Password"
+              value={this.state.userPassword}
+            />
             <View style={styles.btnBg}>
               <Button
                 title="Log in"
                 color={'#41BD3A'}
-                //   onPress={() => this.props.navigation.navigate()}
+                // onPress={}
               />
               <Text> </Text>
               <Button
                 title="Sign up"
-                //onPress={() => this.props.navigation.navigate()}
+                // onPress={}
               />
             </View>
             <View
@@ -81,7 +105,7 @@ export default class Login extends Component {
               </Text>
               <Text
                 style={styles.fgtPaswd}
-                //   onPress={() => this.props.navigation.navigate()}
+                // onPress={}
               >
                 Click Here
               </Text>

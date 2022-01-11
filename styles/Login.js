@@ -43,26 +43,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  textInputCard: {
-    width: '90%',
-    flexDirection: 'row',
-  },
-
-  textInputCardLeft: {
-    fontSize: 16,
-    paddingVertical: '5%',
-    width: '30%',
-    textAlign: 'center',
-    backgroundColor: '#ECEEEF',
-    alignSelf: 'center',
-  },
-
-  textInputCardRight: {
-    borderColor: '#ECEEEF',
-    borderWidth: 1,
-    width: '70%',
-  },
-
   btnBg: {
     width: '50%',
     justifyContent: 'space-between',
